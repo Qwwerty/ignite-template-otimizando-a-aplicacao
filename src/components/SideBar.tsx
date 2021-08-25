@@ -1,20 +1,27 @@
+import {memo, useState} from 'react'
 import { Button } from "./Button";
+import {useQuery} from "react-query";
+import {api} from "../services/api";
+import {GenreResponseProps} from "../App";
 
 interface SideBarProps {
-  genres: Array<{
-    id: number;
-    name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
-    title: string;
-  }>;
   selectedGenreId: number;
   buttonClickCallback: (args: any) => void;
 }
 
+
 export function SideBar({
-  genres,
   selectedGenreId,
   buttonClickCallback
 }: SideBarProps) {
+  const [genres, setGenres] = useState<GenreResponseProps[]>([]);
+
+  useQuery(['genres'],  () => {
+    api.get<GenreResponseProps[]>('genres').then(response => {
+      setGenres(response.data)
+    });
+  })
+
   return (
     <nav className="sidebar">
       <span>Watch<p>Me</p></span>
@@ -34,3 +41,8 @@ export function SideBar({
     </nav>
   )
 }
+
+/*export const SideBar = memo(SideBarComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps.genres, nextProps.genres);
+})
+ */

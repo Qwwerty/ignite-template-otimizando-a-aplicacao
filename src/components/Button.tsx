@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Icon } from './Icon';
 
 import '../styles/button.scss';
@@ -17,3 +18,7 @@ export function Button({ iconName, title, selected, ...rest }: ButtonProps) {
     </button>
   );
 }
+
+/*export const Button = memo(ButtonComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps, nextProps);
+});*/
