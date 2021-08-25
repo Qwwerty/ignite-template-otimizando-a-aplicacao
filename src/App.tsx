@@ -1,6 +1,6 @@
 import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import { SideBar } from './components/SideBar';
 import { Content } from './components/Content';
@@ -47,9 +47,9 @@ export function App() {
     })
   }, [selectedGenreId]);
 
-  function handleClickButton(id: number) {
-    setSelectedGenreId(id);
-  }
+  const handleClickButton = useCallback((id: number) => {
+    setSelectedGenreId(id)
+  }, [])
 
   return (
       <QueryClientProvider client={queryClient}>
